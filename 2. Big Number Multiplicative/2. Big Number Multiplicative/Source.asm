@@ -158,14 +158,16 @@ Output	PROC
 	add	EAX, EBX
 	mov	CL, [EAX]
 
+	mov	EBX, offset Result
 	.while	CL == 0
 		dec	EAX
 		mov	CL, [EAX]
+
+		.if	EAX < EBX
+			mov	EAX, EBX
+			.break
+		.endif
 	.endw
-	mov	EBX, offset Result
-	.if	EAX < EBX
-		mov	EAX, EBX
-	.endif
 
 	mov	EDX, offset Result
 	.while	EAX >= EDX

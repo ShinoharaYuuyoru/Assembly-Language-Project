@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/13/16 00:59:25
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 22:26:30
 Source.asm						     Page 1 - 1
 
 
@@ -179,38 +179,40 @@ Source.asm						     Page 1 - 1
  0000010B  03 C3			add	EAX, EBX
  0000010D  8A 08			mov	CL, [EAX]
 
+ 0000010F  BB 0000024C R		mov	EBX, offset Result
 					.while	CL == 0
- 00000111  48					dec	EAX
- 00000112  8A 08				mov	CL, [EAX]
-					.endw
- 00000118  BB 0000024C R		mov	EBX, offset Result
-					.if	EAX < EBX
- 00000121  8B C3				mov	EAX, EBX
-					.endif
+ 00000116  48					dec	EAX
+ 00000117  8A 08				mov	CL, [EAX]
 
- 00000123  BA 0000024C R		mov	EDX, offset Result
+						.if	EAX < EBX
+ 0000011D  8B C3					mov	EAX, EBX
+							.break
+						.endif
+					.endw
+
+ 00000125  BA 0000024C R		mov	EDX, offset Result
 					.while	EAX >= EDX
- 0000012A  8A 18				mov	BL, [EAX]
- 0000012C  80 C3 30				add	BL,	48
- 0000012F  88 18				mov	[EAX], BL
- 00000131  50					push	EAX
- 00000132  53					push	EBX
- 00000133  51					push	ECX
- 00000134  52					push	EDX
+ 0000012C  8A 18				mov	BL, [EAX]
+ 0000012E  80 C3 30				add	BL,	48
+ 00000131  88 18				mov	[EAX], BL
+ 00000133  50					push	EAX
+ 00000134  53					push	EBX
+ 00000135  51					push	ECX
+ 00000136  52					push	EDX
 							invoke	printf, addr OutCha, BL
- 0000014D  5A					pop	EDX
- 0000014E  59					pop	ECX
- 0000014F  5B					pop	EBX
- 00000150  58					pop	EAX
- 00000151  48					dec	EAX
+ 0000014F  5A					pop	EDX
+ 00000150  59					pop	ECX
+ 00000151  5B					pop	EBX
+ 00000152  58					pop	EAX
+ 00000153  48					dec	EAX
 					.endw
 
 					invoke	printf, addr OutEnt
 
- 00000163  C3				ret
- 00000164			Output ENDP
+ 00000165  C3				ret
+ 00000166			Output ENDP
 
- 00000164			start PROC
+ 00000166			start PROC
 					invoke	printf, addr szOut, addr FirNumM
 					invoke	scanf, addr szFmt, addr FirNum
 					;invoke	printf, addr szOut, addr FirNum
@@ -225,11 +227,11 @@ Source.asm						     Page 1 - 1
 
 					invoke	Output
 
- 000001BB  C3				ret
- 000001BC			start ENDP
+ 000001BD  C3				ret
+ 000001BE			start ENDP
 
 				end start
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/13/16 00:59:25
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 22:26:30
 Source.asm						     Symbols 2 - 1
 
 
@@ -241,7 +243,7 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 _DATA  . . . . . . . . . . . . .	32 Bit	 0001025C DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000001BC DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000001BE DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -250,10 +252,10 @@ Procedures, parameters, and locals:
 
 Calculate  . . . . . . . . . . .	P Near	 00000051 _TEXT	Length= 000000AF Public STDCALL
 Check  . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000051 Public STDCALL
-Output . . . . . . . . . . . . .	P Near	 00000100 _TEXT	Length= 00000064 Public STDCALL
+Output . . . . . . . . . . . . .	P Near	 00000100 _TEXT	Length= 00000066 Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
-start  . . . . . . . . . . . . .	P Near	 00000164 _TEXT	Length= 00000058 Public STDCALL
+start  . . . . . . . . . . . . .	P Near	 00000166 _TEXT	Length= 00000058 Public STDCALL
 
 
 Symbols:
