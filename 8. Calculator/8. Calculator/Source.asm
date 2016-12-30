@@ -60,7 +60,7 @@ sprintf		PROTO C	:DWORD, :DWORD, :vararg
 	LegalFlag		DD	0
 	ErrorMsg		DB	"Input Error", 0
 
-	szNumFmt		DB	'%d', 0
+	szNumFmt		DB	"%d", 0
 
 ;----------------------------------------
 
@@ -107,8 +107,8 @@ start:
 	mov	hInstance, EAX
 	invoke	GetCommandLine
 	mov	CommandLine, EAX
-	invoke	WinMain, hInstance, NULL, CommandLine, SW_SHOWDEFAULT
-	invoke	ExitProcess, EAX
+	invoke	WinMain, hInstance, NULL, CommandLine, SW_SHOWDEFAULT		;Go into WinMain
+	invoke	ExitProcess, EAX											;End
 
 ;--------------------Creat Window--------------------
 WinMain	PROC	hInst:HINSTANCE, hPrevInst:HINSTANCE, CmdLine:LPSTR, CmdShow:DWORD
@@ -133,14 +133,14 @@ WinMain	PROC	hInst:HINSTANCE, hPrevInst:HINSTANCE, CmdLine:LPSTR, CmdShow:DWORD
 	invoke	RegisterClassEx, addr wc
 	invoke	CreateWindowEx, WS_EX_CLIENTEDGE, addr ClassName, addr AppName, \
 			WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, \
-			CW_USEDEFAULT, 640, 480, NULL, NULL, \
+			CW_USEDEFAULT, 640, 480, NULL, NULL, \					;Creat 640*480 window
 			hInst, NULL
 	mov	hwnd, EAX
-	invoke	ShowWindow, hwnd, SW_SHOWNORMAL
+	invoke	ShowWindow, hwnd, SW_SHOWNORMAL							;Show Window
 	invoke	UpdateWindow, hwnd
-	.while	TRUE
+	.while	TRUE													;Start listening message
 		invoke	GetMessage, addr msg, NULL, 0, 0
-		.break	.if(!EAX)
+		.break	.if(!EAX)											;Exit
 		invoke	TranslateMessage, addr msg
 		invoke	DispatchMessage, addr msg
 	.endw
@@ -156,37 +156,37 @@ Calculate	PROC	hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
 		invoke	CreateWindowEx, WS_EX_CLIENTEDGE, addr EditClassName, NULL, \
 				WS_CHILD or WS_VISIBLE or WS_BORDER or ES_LEFT or ES_AUTOHSCROLL, \
 				40, 50, 240, 25, hWnd, EditID1, hInstance, NULL
-		mov	FirstNum, EAX
+		mov	FirstNum, EAX									;Set First Number editText
 		invoke	CreateWindowEx, WS_EX_CLIENTEDGE, addr EditClassName, NULL, \
 				WS_CHILD or WS_VISIBLE or WS_BORDER or ES_LEFT or ES_AUTOHSCROLL, \
 				360, 50, 240, 25, hWnd, EditID2, hInstance, NULL
-		mov	SecondNum, EAX
+		mov	SecondNum, EAX									;Set Second Number editText
 		invoke	CreateWindowEx, WS_EX_CLIENTEDGE, addr EditClassName, NULL, \
 				WS_CHILD or WS_VISIBLE or WS_BORDER or ES_LEFT or ES_AUTOHSCROLL, \
 				100, 360, 440, 25, hWnd, EditID3, hInstance, NULL
-		mov	ResultNum, EAX
-		invoke	SetFocus, FirstNum
+		mov	ResultNum, EAX									;Set Result Number editText
+		invoke	SetFocus, FirstNum							;Set cursor on First Number editText
 
 		invoke	CreateWindowEx, NULL, addr ButtonClassName, addr plusBtnTxt, \
 				WS_CHILD or WS_VISIBLE or BS_DEFPUSHBUTTON, \
 				32, 150, 64, 64, hWnd, ButtonID1, hInstance, NULL
-		mov	plusButton, EAX
+		mov	plusButton, EAX									;Set Plus Button
 		invoke	CreateWindowEx, NULL, addr ButtonClassName, addr minusBtnTxt, \
 				WS_CHILD or WS_VISIBLE or BS_DEFPUSHBUTTON, \
 				160, 150, 64, 64, hWnd, ButtonID2, hInstance, NULL
-		mov	minusButton, EAX
+		mov	minusButton, EAX								;Set Minus Button
 		invoke	CreateWindowEx, NULL, addr ButtonClassName, addr multiBtnTxt, \
 				WS_CHILD or WS_VISIBLE or BS_DEFPUSHBUTTON, \
 				288, 150, 64, 64, hWnd, ButtonID3, hInstance, NULL
-		mov	multiButton, EAX
+		mov	multiButton, EAX								;Set Multiplication Button
 		invoke	CreateWindowEx, NULL, addr ButtonClassName, addr dividBtnTxt, \
 				WS_CHILD or WS_VISIBLE or BS_DEFPUSHBUTTON, \
 				416, 150, 64, 64, hWnd, ButtonID4, hInstance, NULL
-		mov	dividButton, EAX
+		mov	dividButton, EAX								;Set Divide Button
 		invoke	CreateWindowEx, NULL, addr ButtonClassName, addr clearBtnTxt, \
 				WS_CHILD or WS_VISIBLE or BS_DEFPUSHBUTTON, \
 				544, 150, 64, 64, hWnd, ButtonID5, hInstance, NULL
-		mov	clearButton, EAX
+		mov	clearButton, EAX								;Set Clear Button
 ;----------------------------------------UI OVER----------------------------------------
 	.elseif	uMsg == WM_COMMAND
 		mov	EAX, wParam
@@ -198,13 +198,13 @@ Calculate	PROC	hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
 				mov	EAX, LegalFlag
 				.if	EAX == 1					;Input Error
 					invoke	MessageBox, NULL , addr ErrorMsg, addr AppName, MB_OK
-					invoke	CLEAR
+					invoke	CLEAR				;If illegal, Clear
 				.else
-					invoke	PLUS
+					invoke	PLUS				;Else, go Plus
 				.endif
-				invoke	sprintf, addr ResultNumBfr, addr szNumFmt, RstNum
-				invoke	SetWindowText, ResultNum, addr ResultNumBfr
-				invoke	SendMessage, ResultNum, WM_KEYDOWN, VK_END, NULL
+				invoke	sprintf, addr ResultNumBfr, addr szNumFmt, RstNum		;sprintf to ResultNumBfr
+				invoke	SetWindowText, ResultNum, addr ResultNumBfr				;Set Text to Result editText
+				invoke	SendMessage, ResultNum, WM_KEYDOWN, VK_END, NULL		;Send Message
 
 			.elseif	AX == IDM_MINUS
 				invoke	GetWindowText, FirstNum, addr FirstNumBfr, 512
@@ -245,7 +245,7 @@ Calculate	PROC	hWnd:HWND, uMsg:UINT, wParam:WPARAM, lParam:LPARAM
 					invoke	MessageBox, NULL , addr ErrorMsg, addr AppName, MB_OK
 					invoke	CLEAR
 				.else
-					invoke	DIVIDE
+					invoke	DIVIDE								;If divide number is 0, also illegal
 					mov	EAX, LegalFlag
 					.if	EAX == 1
 					invoke	MessageBox, NULL , addr ErrorMsg, addr AppName, MB_OK
@@ -368,7 +368,7 @@ ChangeToNum	PROC
 	mov	EAX, 0
 	mov	EBX, 0
 	mov	ECX, FirstNumCnt
-	.while	EBX < ECX
+	.while	EBX < ECX					;From 0, multiplicarive 10, and add the number. Next time, multiplicative this sum.
 		mov	EDX, 10
 		mul	EDX
 		push	ECX

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 22:26:30
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 23:32:50
 Source.asm						     Page 1 - 1
 
 
@@ -86,7 +86,7 @@ Source.asm						     Page 1 - 1
  00000051  B9 00000148 R		mov	ECX, offset SecNum
  00000056  8B 15 00000248 R		mov	EDX, SecNumP
 					.while	EDX >= ECX
- 00000061  8A 1A				mov	BL, [EDX]
+ 00000061  8A 1A				mov	BL, [EDX]						;BL is the multiplicative number.
 
  00000063  51					push	ECX
  00000064  52					push	EDX
@@ -94,12 +94,12 @@ Source.asm						     Page 1 - 1
  0000006A  8B 15 00000125 R				mov	EDX, FirNumP
 							.while	EDX >= ECX				;ECX EDX in use
  00000072  53							push	EBX
- 00000073  8A 02							mov	AL, [EDX]				;AX in use
+ 00000073  8A 02							mov	AL, [EDX]			;AX in use.
  00000075  F6 E3							mul	BL
 
- 00000077  66| 98							cbw
+ 00000077  66| 98							cbw						;Convert Byte to Word
  00000079  B3 0A							mov	BL, 10
- 0000007B  F6 F3							div	BL
+ 0000007B  F6 F3							div	BL					;The result number is in AL, and the ADD Number to next is in AH
 
  0000007D  52								push	EDX
  0000007E  51								push	ECX
@@ -112,13 +112,13 @@ Source.asm						     Page 1 - 1
 
  00000094  52									push	EDX
  00000095  53									push	EBX
- 00000096  8A 19									mov	BL, [ECX]
+ 00000096  8A 19									mov	BL, [ECX]		;BL is the one of the Number of Result
  00000098  50										push	EAX
  00000099  51										push	ECX
  0000009A  8A C4										mov	AL, AH
- 0000009C  02 D8										add	BL, AL
-												.while	1
-													.if	BL > 9
+ 0000009C  02 D8										add	BL, AL		;Add this time'm result number and Result Number
+												.while	1		;Confirm the next ADD Number and add them, and record final number.
+													.if	BL > 9	
  000000A3  80 EB 0A												sub	BL, 10
  000000A6  88 19												mov	[ECX], BL
  000000A8  41													inc	ECX
@@ -132,13 +132,13 @@ Source.asm						     Page 1 - 1
  000000B5  59										pop	ECX
  000000B6  58										pop	EAX
 
- 000000B7  41										inc	ECX
+ 000000B7  41										inc	ECX				;Point to next Result Number
 
- 000000B8  8A 19									mov	BL, [ECX]
+ 000000B8  8A 19									mov	BL, [ECX]		;Add Result Number and this time's add number.
  000000BA  50										push	EAX
  000000BB  51										push	ECX
  000000BC  02 D8										add	BL, AL
-												.while	1
+												.while	1		;Confirm the next ADD Number and add them, and record final number.
 													.if	BL > 9
  000000C3  80 EB 0A												sub	BL, 10
  000000C6  88 19												mov	[ECX], BL
@@ -162,8 +162,8 @@ Source.asm						     Page 1 - 1
 							.endw
  000000E1  8B 15 0001024B R				mov	EDX, ResultC
  000000E7  42						inc	EDX
- 000000E8  89 15 0001024F R				mov	CutIn, EDX
- 000000EE  89 15 0001024B R				mov	ResultC, EDX
+ 000000E8  89 15 0001024F R				mov	CutIn, EDX						;Set next position of Result Number, and ready to use in next ADD
+ 000000EE  89 15 0001024B R				mov	ResultC, EDX					;Counter++
  000000F4  5A					pop	EDX
  000000F5  59					pop	ECX
 
@@ -179,7 +179,7 @@ Source.asm						     Page 1 - 1
  0000010B  03 C3			add	EAX, EBX
  0000010D  8A 08			mov	CL, [EAX]
 
- 0000010F  BB 0000024C R		mov	EBX, offset Result
+ 0000010F  BB 0000024C R		mov	EBX, offset Result			;Get Position of the first number of Result Number
 					.while	CL == 0
  00000116  48					dec	EAX
  00000117  8A 08				mov	CL, [EAX]
@@ -191,7 +191,7 @@ Source.asm						     Page 1 - 1
 					.endw
 
  00000125  BA 0000024C R		mov	EDX, offset Result
-					.while	EAX >= EDX
+					.while	EAX >= EDX				;print
  0000012C  8A 18				mov	BL, [EAX]
  0000012E  80 C3 30				add	BL,	48
  00000131  88 18				mov	[EAX], BL
@@ -231,7 +231,7 @@ Source.asm						     Page 1 - 1
  000001BE			start ENDP
 
 				end start
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 22:26:30
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 23:32:50
 Source.asm						     Symbols 2 - 1
 
 

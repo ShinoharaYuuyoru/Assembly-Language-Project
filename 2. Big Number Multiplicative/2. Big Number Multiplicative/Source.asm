@@ -65,7 +65,7 @@ Calculate	PROC
 	mov	ECX, offset SecNum
 	mov	EDX, SecNumP
 	.while	EDX >= ECX
-		mov	BL, [EDX]
+		mov	BL, [EDX]						;BL is the multiplicative number.
 
 		push	ECX
 		push	EDX
@@ -73,12 +73,12 @@ Calculate	PROC
 			mov	EDX, FirNumP
 			.while	EDX >= ECX				;ECX EDX in use
 				push	EBX
-					mov	AL, [EDX]				;AX in use
+					mov	AL, [EDX]			;AX in use.
 					mul	BL
 
-					cbw
+					cbw						;Convert Byte to Word
 					mov	BL, 10
-					div	BL
+					div	BL					;The result number is in AL, and the ADD Number to next is in AH
 
 					push	EDX
 					push	ECX
@@ -91,13 +91,13 @@ Calculate	PROC
 
 						push	EDX
 						push	EBX
-							mov	BL, [ECX]
+							mov	BL, [ECX]		;BL is the one of the Number of Result
 							push	EAX
 							push	ECX
 								mov	AL, AH
-								add	BL, AL
-								.while	1
-									.if	BL > 9
+								add	BL, AL		;Add this time'm result number and Result Number
+								.while	1		;Confirm the next ADD Number and add them, and record final number.
+									.if	BL > 9	
 										sub	BL, 10
 										mov	[ECX], BL
 										inc	ECX
@@ -111,13 +111,13 @@ Calculate	PROC
 							pop	ECX
 							pop	EAX
 
-							inc	ECX
+							inc	ECX				;Point to next Result Number
 
-							mov	BL, [ECX]
+							mov	BL, [ECX]		;Add Result Number and this time's add number.
 							push	EAX
 							push	ECX
 								add	BL, AL
-								.while	1
+								.while	1		;Confirm the next ADD Number and add them, and record final number.
 									.if	BL > 9
 										sub	BL, 10
 										mov	[ECX], BL
@@ -141,8 +141,8 @@ Calculate	PROC
 			.endw
 			mov	EDX, ResultC
 			inc	EDX
-			mov	CutIn, EDX
-			mov	ResultC, EDX
+			mov	CutIn, EDX						;Set next position of Result Number, and ready to use in next ADD
+			mov	ResultC, EDX					;Counter++
 		pop	EDX
 		pop	ECX
 
@@ -158,7 +158,7 @@ Output	PROC
 	add	EAX, EBX
 	mov	CL, [EAX]
 
-	mov	EBX, offset Result
+	mov	EBX, offset Result			;Get Position of the first number of Result Number
 	.while	CL == 0
 		dec	EAX
 		mov	CL, [EAX]
@@ -170,7 +170,7 @@ Output	PROC
 	.endw
 
 	mov	EDX, offset Result
-	.while	EAX >= EDX
+	.while	EAX >= EDX				;print
 		mov	BL, [EAX]
 		add	BL,	48
 		mov	[EAX], BL

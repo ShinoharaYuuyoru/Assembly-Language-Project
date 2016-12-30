@@ -15,8 +15,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="Test.asm">
+    <ClCompile Include="Source.cpp">
       <Filter>ソース ファイル</Filter>
-    </MASM>
+    </ClCompile>
   </ItemGroup>
 </Project>
