@@ -1,0 +1,6 @@
+﻿  Assembling Source.asm...
+Source.asm(149): warning A6004: procedure argument or local not referenced : hPrevInst
+Source.asm(149): warning A6004: procedure argument or local not referenced : CmdLine
+Source.asm(149): warning A6004: procedure argument or local not referenced : CmdShow
+  8. Calculator.vcxproj -> C:\Users\ShYy\Desktop\Assembly Language\8. Calculator\Debug\8. Calculator.exe
+  8. Calculator.vcxproj -> C:\Users\ShYy\Desktop\Assembly Language\8. Calculator\Debug\8. Calculator.pdb (Full PDB)
