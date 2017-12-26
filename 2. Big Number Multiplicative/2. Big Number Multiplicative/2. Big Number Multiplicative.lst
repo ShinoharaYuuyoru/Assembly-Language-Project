@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 23:32:50
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    11/11/17 22:16:40
 Source.asm						     Page 1 - 1
 
 
@@ -7,6 +7,9 @@ Source.asm						     Page 1 - 1
 
 				;include	msvcrt.inc
 				includelib	msvcrt.lib
+				includelib	vcruntimed.lib
+				includelib	ucrtd.lib
+
 				scanf	PROTO C	:dword, :vararg
 				printf	PROTO C	:dword, :vararg
 
@@ -231,7 +234,7 @@ Source.asm						     Page 1 - 1
  000001BE			start ENDP
 
 				end start
-Microsoft (R) Macro Assembler Version 14.00.24210.0	    12/30/16 23:32:50
+Microsoft (R) Macro Assembler Version 14.00.24210.0	    11/11/17 22:16:40
 Source.asm						     Symbols 2 - 1
 
 

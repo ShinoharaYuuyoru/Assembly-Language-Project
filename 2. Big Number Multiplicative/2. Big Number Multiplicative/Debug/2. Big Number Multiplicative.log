@@ -1,3 +1,5 @@
 ﻿  Assembling Source.asm...
-  2. Big Number Multiplicative.vcxproj -> C:\Users\ShYy\Desktop\Assembly Language\2. Big Number Multiplicative\Debug\2. Big Number Multiplicative.exe
-  2. Big Number Multiplicative.vcxproj -> C:\Users\ShYy\Desktop\Assembly Language\2. Big Number Multiplicative\Debug\2. Big Number Multiplicative.pdb (Full PDB)
+Source.obj : warning LNK4258: 僨傿儗僋僥傿僽 '/ENTRY:start@0' 偼僗僀僢僠 '/ENTRY:start' 偲屳姺惈偑偁傝傑偣傫丅柍帇偝傟傑偡
+Source.obj : error LNK2019: 枹夝寛偺奜晹僔儞儃儖 _scanf 偑娭悢 _start@0 偱嶲徠偝傟傑偟偨丅
+Source.obj : error LNK2019: 枹夝寛偺奜晹僔儞儃儖 _printf 偑娭悢 _Output@0 偱嶲徠偝傟傑偟偨丅
+F:\University Study\曌嫮\Grade 3 1st\???尵\Assembly-Language-Project\2. Big Number Multiplicative\Debug\2. Big Number Multiplicative.exe : fatal error LNK1120: 2 審偺枹夝寛偺奜晹嶲徠

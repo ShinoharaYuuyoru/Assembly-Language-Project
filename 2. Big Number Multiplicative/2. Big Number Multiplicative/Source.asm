@@ -3,6 +3,7 @@
 
 ;include	msvcrt.inc
 includelib	msvcrt.lib
+
 scanf	PROTO C	:dword, :vararg
 printf	PROTO C	:dword, :vararg
 
